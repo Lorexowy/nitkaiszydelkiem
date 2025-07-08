@@ -1,26 +1,187 @@
 @import "tailwindcss";
 
+/* Import fontów dla rękodzieła */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
+/* Zmienne CSS dla kolorów sklepu */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Główne kolory */
+  --color-primary: #D67441;        /* Ciepła terrakota */
+  --color-primary-light: #E8956A;  /* Jasniejsza terrakota */
+  --color-primary-dark: #B85C2E;   /* Ciemniejsza terrakota */
+  
+  --color-secondary: #4A90A4;      /* Przytulny niebieski */
+  --color-secondary-light: #6BA8BA; /* Jasniejszy niebieski */
+  --color-secondary-dark: #357A8A;  /* Ciemniejszy niebieski */
+  
+  /* Akcenty (kolory włóczek) */
+  --color-accent-yellow: #F4D03F;  /* Żółty akcent */
+  --color-accent-green: #82C341;   /* Zielony akcent */
+  --color-accent-red: #E74C3C;     /* Czerwony akcent */
+  
+  /* Tła */
+  --color-background: #FFF8F0;     /* Kremowe tło */
+  --color-surface: #FFFFFF;        /* Białe powierzchnie */
+  --color-surface-alt: #F8F4E6;    /* Alternatywne powierzchnie */
+  
+  /* Teksty */
+  --color-text: #2C3E50;           /* Ciemny tekst */
+  --color-text-light: #5D6D7E;     /* Jasniejszy tekst */
+  --color-text-muted: #85929E;     /* Wyciszony tekst */
+  
+  /* Stany */
+  --color-success: #27AE60;        /* Sukces */
+  --color-warning: #F39C12;        /* Ostrzeżenie */
+  --color-error: #E74C3C;          /* Błąd */
+  --color-info: #3498DB;           /* Informacja */
+  
+  /* Fonty */
+  --font-primary: 'Quicksand', sans-serif;
+  --font-accent: 'Satisfy', cursive;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Podstawowe style body */
+body {
+  font-family: var(--font-primary);
+  color: var(--color-text);
+  background-color: var(--color-background);
+  line-height: 1.6;
+  font-weight: 400;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Style dla nagłówków */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-accent);
+  color: var(--color-primary);
+  font-weight: 400;
+}
+
+/* Klasy utility dla naszego designu */
+@layer components {
+  .btn-primary {
+    @apply bg-orange-500 text-white hover:bg-orange-600 active:bg-orange-700 
+           px-6 py-3 rounded-lg font-medium transition-colors duration-200 
+           focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-cyan-600 text-white hover:bg-cyan-700 active:bg-cyan-800 
+           px-6 py-3 rounded-lg font-medium transition-colors duration-200 
+           focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white 
+           px-6 py-3 rounded-lg font-medium transition-all duration-200 
+           focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-md p-6 border border-amber-100 
+           hover:shadow-lg transition-shadow duration-200;
+  }
+  
+  .card-product {
+    @apply bg-white rounded-lg shadow-md overflow-hidden border border-amber-100 
+           hover:shadow-lg hover:scale-105 transition-all duration-200;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border border-amber-200 rounded-lg 
+           focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent 
+           transition-all duration-200 bg-white text-gray-900 placeholder-gray-500;
+  }
+  
+  .handmade-title {
+    @apply text-3xl md:text-4xl lg:text-5xl text-orange-500 
+           font-normal leading-tight tracking-wide;
+    font-family: var(--font-accent);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-price {
+    @apply text-xl font-semibold text-orange-600;
+  }
+  
+  .section-title {
+    @apply text-2xl md:text-3xl text-center mb-8 text-orange-500;
+    font-family: var(--font-accent);
+  }
+  
+  .text-handmade {
+    @apply text-orange-500 font-medium;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+  
+  .badge-success {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .badge-warning {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  
+  .badge-error {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  .badge-info {
+    @apply bg-blue-100 text-blue-800;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Animacje loading */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Style dla focus accessibility */
+*:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Responsywne zdjęcia */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Style dla selection */
+::selection {
+  background-color: var(--color-primary-light);
+  color: white;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
 }
