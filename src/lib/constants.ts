@@ -221,9 +221,9 @@ export const APP_CONFIG = {
   name: "Nitką i Szydełkiem",
   description: "Sklep z ręcznie robionymi wyrobami szydełkowymi",
   url: "https://nitkaiszydelkiem.pl",
-  email: "kontakt@nitkaiszydelkiem.pl",
-  phone: "+48 123 456 789",
-  address: "Warszawa, Polska",
+  email: "magdamichel71@gmail.com",
+  phone: "+48 502 931 660",
+  address: "Kraków, Polska",
   
   // Limity
   maxCartItems: 99,
