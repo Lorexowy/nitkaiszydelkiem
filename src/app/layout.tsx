@@ -19,6 +19,13 @@ export const metadata = {
     address: false,
     telephone: false,
   },
+  // KLUCZOWY VIEWPORT META TAG
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
   metadataBase: new URL(APP_CONFIG.url),
   alternates: {
     canonical: APP_CONFIG.url,
@@ -64,11 +71,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pl">
-      <body className="min-h-screen bg-white">
-        <div className="flex flex-col min-h-screen">
+    <html lang="pl" className="overflow-x-hidden">
+      <body className="min-h-screen bg-white overflow-x-hidden w-full">
+        <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
           <Header />
-          <main className="flex-grow">
+          <main className="flex-grow w-full overflow-x-hidden">
             {children}
           </main>
           <Footer />

@@ -65,7 +65,7 @@ const Header: React.FC = () => {
     }`}>
       {/* Top Bar - Auth & Contact - Hide on small mobile */}
       <div className="bg-gray-50 border-b border-gray-200 hidden sm:block">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-6xl mx-auto px-3 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between h-10 text-sm">
             
             {/* Left - Contact Info */}
@@ -111,7 +111,7 @@ const Header: React.FC = () => {
 
       {/* Main Navigation */}
       <div className="bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-6xl mx-auto px-3 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             
             {/* Left - Logo */}
@@ -196,7 +196,7 @@ const Header: React.FC = () => {
           ? 'max-h-20 opacity-100 translate-y-0' 
           : 'max-h-0 opacity-0 -translate-y-2'
       }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+        <div className="w-full max-w-6xl mx-auto px-3 sm:px-4 py-4">
           <div className="relative">
             <div className={`transition-all duration-300 ease-out ${
               isMobileSearchOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
@@ -235,8 +235,8 @@ const Header: React.FC = () => {
           onClick={closeMobileMenu}
         />
         
-        {/* Mobile Menu Panel - PEŁNA SZEROKOŚĆ 100VW */}
-        <div className={`absolute inset-y-0 left-0 w-screen bg-white shadow-xl transform transition-transform duration-300 ease-out ${
+        {/* Mobile Menu Panel - POPRAWIONA SZEROKOŚĆ */}
+        <div className={`absolute inset-y-0 left-0 w-full max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-out ${
           isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
           <div className="flex flex-col h-full">
