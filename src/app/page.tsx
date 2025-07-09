@@ -4,7 +4,6 @@ import {
   HeroSection,
   CategoriesSection,
   FeaturedProductsSection,
-  AboutSection,
   CTASection
 } from '@/components/sections';
 
@@ -14,7 +13,6 @@ export default function HomePage() {
       <HeroSection />
       <CategoriesSection />
       <FeaturedProductsSection />
-      <AboutSection />
       <CTASection />
     </div>
   );
