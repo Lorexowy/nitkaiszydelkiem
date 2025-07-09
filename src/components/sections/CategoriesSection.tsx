@@ -93,29 +93,6 @@ const CategoriesSection: React.FC = () => {
           ))}
         </div>
       </div>
-
-      {/* Call to Action - Constrained */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20 lg:mt-24">
-        <div className="text-center">
-          <div className="max-w-2xl mx-auto">
-            <h3 className="text-2xl sm:text-3xl font-medium text-gray-900 mb-4" style={{ fontFamily: 'Crimson Pro, serif' }}>
-              Potrzebujesz czegoś wyjątkowego?
-            </h3>
-            <p className="text-gray-600 mb-8 text-lg leading-relaxed">
-              Tworzymy również produkty na indywidualne zamówienie. Skontaktuj się z nami, 
-              a pomożemy Ci zrealizować Twoje pomysły.
-            </p>
-            <button className="btn-accent btn-lg">
-              <span className="flex items-center justify-center">
-                Zamów na miarę
-                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
     </section>
   );
 };
