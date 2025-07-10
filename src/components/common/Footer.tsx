@@ -7,54 +7,8 @@ import { APP_CONFIG } from '@/lib/constants';
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
-  // Newsletter subscription handler
-  const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    console.log('Newsletter subscription:', email);
-    // TODO: Implement newsletter subscription
-  };
-
   return (
     <footer className="bg-white border-t border-gray-200">
-      
-      {/* Newsletter Section - Premium Touch */}
-      <div className="bg-gradient-to-r from-blue-50 to-blue-100 border-b border-blue-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-          <div className="text-center">
-            <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Crimson Pro, serif' }}>
-              Bądź na bieżąco z nowościami
-            </h3>
-            <p className="text-gray-600 mb-8 max-w-2xl mx-auto text-balance">
-              Zapisz się do newslettera i jako pierwszy dowiaduj się o nowych produktach, 
-              promocjach i inspiracjach szydełkowych
-            </p>
-            
-            <form onSubmit={handleNewsletterSubmit} className="max-w-md mx-auto">
-              <div className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Twój adres e-mail"
-                  required
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white shadow-sm"
-                />
-                <button
-                  type="submit"
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 shadow-md hover:shadow-lg"
-                >
-                  Zapisz się
-                </button>
-              </div>
-              <p className="text-xs text-gray-500 mt-3">
-                Nie wysyłamy spamu. Możesz się wypisać w każdej chwili.
-              </p>
-            </form>
-          </div>
-        </div>
-      </div>
-
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         
@@ -128,21 +82,38 @@ const Footer: React.FC = () => {
               <h5 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-4">
                 Bezpieczne płatności
               </h5>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  { name: 'Przelewy24', icon: '🏦', color: 'border-orange-200 bg-orange-50' },
-                  { name: 'BLIK', icon: '📱', color: 'border-blue-200 bg-blue-50' },
-                  { name: 'PayPal', icon: '💳', color: 'border-blue-200 bg-blue-50' },
-                  { name: 'Karty', icon: '💰', color: 'border-gray-200 bg-gray-50' }
-                ].map((payment, index) => (
-                  <div
-                    key={index}
-                    className={`inline-flex items-center space-x-1 px-3 py-1.5 border rounded-lg text-xs font-medium ${payment.color}`}
-                  >
-                    <span className="text-sm">{payment.icon}</span>
-                    <span className="text-gray-700">{payment.name}</span>
-                  </div>
-                ))}
+              <div className="flex flex-wrap gap-3">
+                {/* Przelewy24 */}
+                <div className="inline-flex items-center space-x-2 px-3 py-2 border border-gray-200 bg-gray-50 rounded-lg">
+                  <svg className="w-6 h-6 text-orange-600" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                  </svg>
+                  <span className="text-sm font-medium text-gray-700">Przelewy24</span>
+                </div>
+                
+                {/* BLIK */}
+                <div className="inline-flex items-center space-x-2 px-3 py-2 border border-gray-200 bg-gray-50 rounded-lg">
+                  <svg className="w-6 h-6 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 2v10h2V7H7zm4 0v10h2V7h-2zm4 0v10h2V7h-2z"/>
+                  </svg>
+                  <span className="text-sm font-medium text-gray-700">BLIK</span>
+                </div>
+                
+                {/* PayPal */}
+                <div className="inline-flex items-center space-x-2 px-3 py-2 border border-gray-200 bg-gray-50 rounded-lg">
+                  <svg className="w-6 h-6 text-blue-700" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 2.79A.859.859 0 0 1 5.8 2h8.212c3.769 0 6.345 2.077 6.345 5.238 0 3.769-3.27 6.019-7.597 6.019H9.404l-.894 4.852a.641.641 0 0 1-.633.528zm2.264-7.284h2.9c3.515 0 6.048-1.383 6.048-4.486 0-2.264-1.888-3.515-4.4-3.515H9.53L7.34 14.053z"/>
+                  </svg>
+                  <span className="text-sm font-medium text-gray-700">PayPal</span>
+                </div>
+                
+                {/* Karty płatnicze */}
+                <div className="inline-flex items-center space-x-2 px-3 py-2 border border-gray-200 bg-gray-50 rounded-lg">
+                  <svg className="w-6 h-6 text-gray-600" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
+                  </svg>
+                  <span className="text-sm font-medium text-gray-700">Karty</span>
+                </div>
               </div>
             </div>
           </div>
@@ -292,29 +263,44 @@ const Footer: React.FC = () => {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             {[
               {
-                icon: '🚚',
                 title: 'Darmowa dostawa',
                 desc: 'Od 150 zł'
               },
               {
-                icon: '🔄',
                 title: 'Łatwe zwroty',
                 desc: '14 dni na zwrot'
               },
               {
-                icon: '🛡️',
                 title: 'Bezpieczne płatności',
                 desc: 'SSL i szyfrowanie'
               },
               {
-                icon: '⭐',
                 title: 'Najwyższa jakość',
                 desc: 'Ręcznie robione'
               }
             ].map((badge, index) => (
               <div key={index} className="flex flex-col items-center group">
-                <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-200">
-                  {badge.icon}
+                <div className="mb-3">
+                  {index === 0 && (
+                    <svg className="w-8 h-8 text-gray-500 group-hover:text-gray-700 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4l4 4M4 16l4-4" />
+                    </svg>
+                  )}
+                  {index === 1 && (
+                    <svg className="w-8 h-8 text-gray-500 group-hover:text-gray-700 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                  )}
+                  {index === 2 && (
+                    <svg className="w-8 h-8 text-gray-500 group-hover:text-gray-700 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  )}
+                  {index === 3 && (
+                    <svg className="w-8 h-8 text-gray-500 group-hover:text-gray-700 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                    </svg>
+                  )}
                 </div>
                 <div className="text-sm font-semibold text-gray-900 mb-1">
                   {badge.title}
@@ -329,17 +315,17 @@ const Footer: React.FC = () => {
 
         {/* Copyright Section */}
         <div className="border-t border-gray-200 mt-12 pt-8">
-          <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+          <div className="flex flex-col space-y-4 items-center text-center">
             
             {/* Copyright */}
-            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm text-gray-500">
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm text-gray-500">
               <p>&copy; {currentYear} {APP_CONFIG.name}. Wszystkie prawa zastrzeżone.</p>
-              <span className="hidden sm:inline text-gray-300">|</span>
+              <span className="hidden sm:block text-gray-300">|</span>
               <p>Sklep internetowy z wyrobami szydełkowymi</p>
             </div>
 
             {/* Legal Links */}
-            <div className="flex flex-wrap justify-center lg:justify-end items-center space-x-4 text-sm">
+            <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-sm">
               <a href="/regulamin" className="text-gray-500 hover:text-gray-700 transition-colors duration-200">
                 Regulamin
               </a>
