@@ -354,7 +354,107 @@ img {
   animation: fade-in-up 0.5s ease-out;
 }
 
-/* ===== Range slider custom styles - IMPROVED ===== */
+/* ===== POPRAWIONY Dual Range Slider Styles ===== */
+.slider-thumb-min::-webkit-slider-thumb,
+.slider-thumb-max::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #3B82F6;
+  cursor: pointer;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3), 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 3;
+}
+
+.slider-thumb-min::-webkit-slider-thumb:hover,
+.slider-thumb-max::-webkit-slider-thumb:hover {
+  background: #2563EB;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4), 0 2px 6px rgba(0, 0, 0, 0.15);
+  transform: scale(1.1);
+}
+
+.slider-thumb-min::-webkit-slider-thumb:active,
+.slider-thumb-max::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+}
+
+.slider-thumb-min::-moz-range-thumb,
+.slider-thumb-max::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #3B82F6;
+  cursor: pointer;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3), 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 3;
+}
+
+.slider-thumb-min::-moz-range-thumb:hover,
+.slider-thumb-max::-moz-range-thumb:hover {
+  background: #2563EB;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4), 0 2px 6px rgba(0, 0, 0, 0.15);
+  transform: scale(1.1);
+}
+
+/* ===== Focus states for accessibility ===== */
+.slider-thumb-min:focus,
+.slider-thumb-max:focus {
+  outline: none;
+}
+
+.slider-thumb-min:focus::-webkit-slider-thumb,
+.slider-thumb-max:focus::-webkit-slider-thumb {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+}
+
+.slider-thumb-min:focus::-moz-range-thumb,
+.slider-thumb-max::-moz-range-thumb {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+}
+
+/* ===== Remove default track styling ===== */
+.slider-thumb-min::-webkit-slider-track,
+.slider-thumb-max::-webkit-slider-track {
+  background: transparent;
+  border: none;
+}
+
+.slider-thumb-min::-moz-range-track,
+.slider-thumb-max::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+
+/* ===== Better positioning ===== */
+.slider-thumb-min,
+.slider-thumb-max {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.slider-thumb-min::-webkit-slider-thumb,
+.slider-thumb-max::-webkit-slider-thumb {
+  pointer-events: auto;
+}
+
+.slider-thumb-min::-moz-range-thumb,
+.slider-thumb-max::-moz-range-thumb {
+  pointer-events: auto;
+}
+
+/* ===== Range slider custom styles - IMPROVED (ZACHOWANE ORYGINALNE) ===== */
 .range-slider {
   -webkit-appearance: none;
   appearance: none;
@@ -437,7 +537,7 @@ img {
   background: #A0AEC0;
 }
 
-/* ===== Focus states for accessibility ===== */
+/* ===== Focus states for accessibility (range slider) ===== */
 .range-slider:focus {
   outline: none;
 }
@@ -610,7 +710,9 @@ img {
 
 /* ===== High contrast mode support ===== */
 @media (prefers-contrast: high) {
-  .range-slider::-webkit-slider-thumb {
+  .range-slider::-webkit-slider-thumb,
+  .slider-thumb-min::-webkit-slider-thumb,
+  .slider-thumb-max::-webkit-slider-thumb {
     border: 3px solid #000000;
   }
   
@@ -625,6 +727,8 @@ img {
   .filter-slide-down,
   .filter-slide-up,
   .range-slider::-webkit-slider-thumb,
+  .slider-thumb-min::-webkit-slider-thumb,
+  .slider-thumb-max::-webkit-slider-thumb,
   .filter-option {
     animation: none;
     transition: none;

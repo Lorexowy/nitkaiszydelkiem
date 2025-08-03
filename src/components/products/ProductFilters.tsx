@@ -1,7 +1,7 @@
 // src/components/products/ProductFilters.tsx
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ProductFilters, ProductSortOption } from '@/lib/data/products';
 import { categories } from '@/lib/constants';
 import { cn } from '@/lib/utils';
@@ -38,6 +38,11 @@ const ProductFiltersComponent: React.FC<ProductFiltersProps> = ({
     filters.maxPrice || priceRange.max
   ]);
 
+  // Refs dla range sliderów
+  const minSliderRef = useRef<HTMLInputElement>(null);
+  const maxSliderRef = useRef<HTMLInputElement>(null);
+  const rangeTrackRef = useRef<HTMLDivElement>(null);
+
   // Synchronizuj lokalny stan z propsami
   useEffect(() => {
     setLocalPriceRange([
@@ -45,6 +50,11 @@ const ProductFiltersComponent: React.FC<ProductFiltersProps> = ({
       filters.maxPrice || priceRange.max
     ]);
   }, [filters.minPrice, filters.maxPrice, priceRange]);
+
+  // Aktualizuj wizualny range track
+  useEffect(() => {
+    updateRangeTrack();
+  }, [localPriceRange, priceRange]);
 
   // Opcje sortowania
   const sortOptions = [
@@ -63,17 +73,59 @@ const ProductFiltersComponent: React.FC<ProductFiltersProps> = ({
     { value: 'made-to-order', label: 'Na zamówienie' }
   ];
 
-  // Handler dla zmiany ceny - z debounce
-  const handlePriceChange = (min: number, max: number) => {
-    setLocalPriceRange([min, max]);
+  // Funkcja do aktualizacji wizualnego tracka
+  const updateRangeTrack = () => {
+    if (!rangeTrackRef.current) return;
+
+    const [min, max] = localPriceRange;
+    const { min: rangeMin, max: rangeMax } = priceRange;
+    
+    const leftPercent = ((min - rangeMin) / (rangeMax - rangeMin)) * 100;
+    const rightPercent = ((max - rangeMin) / (rangeMax - rangeMin)) * 100;
+    
+    rangeTrackRef.current.style.left = `${leftPercent}%`;
+    rangeTrackRef.current.style.width = `${rightPercent - leftPercent}%`;
+  };
+
+  // Handler dla zmiany minimum - z debounce
+  const handleMinChange = (value: number) => {
+    const newMin = Math.min(value, localPriceRange[1] - 1);
+    const newRange = [newMin, localPriceRange[1]];
+    setLocalPriceRange(newRange);
     
     // Debounce - aktualizuj filtry po 500ms
     setTimeout(() => {
       onFiltersChange({
-        minPrice: min === priceRange.min ? undefined : min,
-        maxPrice: max === priceRange.max ? undefined : max
+        minPrice: newMin === priceRange.min ? undefined : newMin,
+        maxPrice: newRange[1] === priceRange.max ? undefined : newRange[1]
       });
     }, 500);
+  };
+
+  // Handler dla zmiany maximum - z debounce
+  const handleMaxChange = (value: number) => {
+    const newMax = Math.max(value, localPriceRange[0] + 1);
+    const newRange = [localPriceRange[0], newMax];
+    setLocalPriceRange(newRange);
+    
+    // Debounce - aktualizuj filtry po 500ms
+    setTimeout(() => {
+      onFiltersChange({
+        minPrice: newRange[0] === priceRange.min ? undefined : newRange[0],
+        maxPrice: newMax === priceRange.max ? undefined : newMax
+      });
+    }, 500);
+  };
+
+  // Handler dla input field changes
+  const handleInputMinChange = (value: number) => {
+    const clampedValue = Math.min(Math.max(value, priceRange.min), localPriceRange[1] - 1);
+    handleMinChange(clampedValue);
+  };
+
+  const handleInputMaxChange = (value: number) => {
+    const clampedValue = Math.max(Math.min(value, priceRange.max), localPriceRange[0] + 1);
+    handleMaxChange(clampedValue);
   };
 
   // Sprawdź czy są aktywne filtry
@@ -274,9 +326,9 @@ const ProductFiltersComponent: React.FC<ProductFiltersProps> = ({
             </div>
           </FilterSection>
 
-          {/* ZAKRES CEN */}
+          {/* ZAKRES CEN - POPRAWIONY DUAL RANGE SLIDER */}
           <FilterSection title="Zakres cen" icon="💰">
-            <div className="space-y-4">
+            <div className="space-y-6">
               {/* Input fields */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
@@ -288,7 +340,7 @@ const ProductFiltersComponent: React.FC<ProductFiltersProps> = ({
                     min={priceRange.min}
                     max={priceRange.max}
                     value={localPriceRange[0]}
-                    onChange={(e) => handlePriceChange(Number(e.target.value), localPriceRange[1])}
+                    onChange={(e) => handleInputMinChange(Number(e.target.value))}
                     className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
                     placeholder={String(priceRange.min)}
                   />
@@ -302,35 +354,65 @@ const ProductFiltersComponent: React.FC<ProductFiltersProps> = ({
                     min={priceRange.min}
                     max={priceRange.max}
                     value={localPriceRange[1]}
-                    onChange={(e) => handlePriceChange(localPriceRange[0], Number(e.target.value))}
+                    onChange={(e) => handleInputMaxChange(Number(e.target.value))}
                     className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
                     placeholder={String(priceRange.max)}
                   />
                 </div>
               </div>
               
-              {/* Range slider */}
+              {/* POPRAWIONY Dual Range Slider */}
               <div className="relative pt-2">
-                <div className="flex justify-between text-xs text-gray-500 mb-2">
+                <div className="flex justify-between text-xs text-gray-500 mb-4">
                   <span>{priceRange.min} zł</span>
                   <span>{priceRange.max} zł</span>
                 </div>
-                <input
-                  type="range"
-                  min={priceRange.min}
-                  max={priceRange.max}
-                  value={localPriceRange[0]}
-                  onChange={(e) => handlePriceChange(Number(e.target.value), localPriceRange[1])}
-                  className="range-slider absolute w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                />
-                <input
-                  type="range"
-                  min={priceRange.min}
-                  max={priceRange.max}
-                  value={localPriceRange[1]}
-                  onChange={(e) => handlePriceChange(localPriceRange[0], Number(e.target.value))}
-                  className="range-slider absolute w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                />
+                
+                {/* Slider Container */}
+                <div className="relative">
+                  {/* Track Background */}
+                  <div className="h-2 bg-gray-200 rounded-lg relative">
+                    {/* Active Track */}
+                    <div
+                      ref={rangeTrackRef}
+                      className="absolute h-2 bg-blue-500 rounded-lg"
+                      style={{
+                        left: `${((localPriceRange[0] - priceRange.min) / (priceRange.max - priceRange.min)) * 100}%`,
+                        width: `${((localPriceRange[1] - localPriceRange[0]) / (priceRange.max - priceRange.min)) * 100}%`
+                      }}
+                    />
+                  </div>
+                  
+                  {/* Min Range Input */}
+                  <input
+                    ref={minSliderRef}
+                    type="range"
+                    min={priceRange.min}
+                    max={priceRange.max}
+                    value={localPriceRange[0]}
+                    onChange={(e) => handleMinChange(Number(e.target.value))}
+                    className="absolute w-full h-2 bg-transparent appearance-none cursor-pointer slider-thumb-min"
+                    style={{ zIndex: localPriceRange[0] > priceRange.max - 100 ? 5 : 1 }}
+                  />
+                  
+                  {/* Max Range Input */}
+                  <input
+                    ref={maxSliderRef}
+                    type="range"
+                    min={priceRange.min}
+                    max={priceRange.max}
+                    value={localPriceRange[1]}
+                    onChange={(e) => handleMaxChange(Number(e.target.value))}
+                    className="absolute w-full h-2 bg-transparent appearance-none cursor-pointer slider-thumb-max"
+                    style={{ zIndex: localPriceRange[1] < priceRange.min + 100 ? 5 : 1 }}
+                  />
+                </div>
+                
+                {/* Current Values Display */}
+                <div className="flex justify-between text-sm font-medium text-gray-700 mt-3">
+                  <span>{localPriceRange[0]} zł</span>
+                  <span>{localPriceRange[1]} zł</span>
+                </div>
               </div>
             </div>
           </FilterSection>
